@@ -7,7 +7,7 @@ adapters:
 
 ## 是否开启认证流程, 若为 true 则建立连接时需要验证 verifyKey
 ## 建议公网连接时开启
-enableVerify: false
+enableVerify: true
 verifyKey: 1234567890
 
 ## 开启一些调式信息
@@ -27,12 +27,6 @@ cacheSize: 4096
 adapterSettings:
   ## 详情看 http adapter 使用说明 配置
   http:
-    host: localhost
+    host: 0.0.0.0
     port: 8080
     cors: [*]
-  
-  ## 详情看 websocket adapter 使用说明 配置
-  ws:
-    host: localhost
-    port: 8080
-    reservedSyncId: -1
