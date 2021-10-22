@@ -19,6 +19,6 @@ mirai方案暂时中断在机器人登录QQ安全验证上
 ```
 #### docker容器
    1. mirai:java11
+   2. service:node
 
-#### mirai http
-``
+#### mirai doc
