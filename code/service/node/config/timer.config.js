@@ -18,7 +18,7 @@ module.exports = [{
         send({
             "msgtype": "actionCard",
             "actionCard": {
-                "title": "休息",
+                "title": "辛苦了，王老师，休息一下眼睛",
                 // ![screenshot](https://hbimg.huabanimg.com/71f426241bd3c20c33e9d6e45d916bf77922291df0a2-l7QhZH_fw658/format/webp) \n\n
                 "text": "### 💕💕💕王老师，你应该休息了哟~ \n\n 工作辛苦了👏45分钟又过去了 \n\n请休息2-5分钟再投入工作~🤞",
                 "btnOrientation": "0",
