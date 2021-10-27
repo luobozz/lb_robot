@@ -17,7 +17,7 @@ class Timer {
         this.times = config.times;
         this.status = Status.STOP;
         this.nextTime = -1;
-        this.ImmediatelyStart = config.ImmediatelyStart || false
+        this.startType = config.ImmediatelyStart || false
     }
 }
 
