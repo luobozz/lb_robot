@@ -7,5 +7,9 @@ module.exports = (name)=>{
             console[e](`[${name}]`, ...args)
         }
     }
+
+    exports.n=()=>{
+        console.log("")
+    }
     return exports
 }

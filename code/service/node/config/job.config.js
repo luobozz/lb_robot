@@ -8,9 +8,10 @@ const Timer = require("../util/jobs.util/job");
 const moment=require("moment")
 
 const send = (context) => {
-    api.dingtalk.robot.send(context).then(r => {
-        console.log(r.data)
-    })
+    console.log("send")
+    // api.dingtalk.robot.send(context).then(r => {
+    //     console.log(r.data)
+    // })
 }
 module.exports = [
     {
@@ -19,7 +20,7 @@ module.exports = [
             console.log(执行了)
         },
         type: Timer.Type.EVERDAY,
-        handleStr:"",
+        handleStr:"123123",
     },
     {
         name: "提醒休息",
@@ -41,5 +42,5 @@ module.exports = [
             })
         },
         type: Timer.Type.EVERDAY,
-        handleStr:"",
+        handleStr:"* */45 * * * *",
     }]

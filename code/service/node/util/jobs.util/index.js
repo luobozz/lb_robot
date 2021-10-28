@@ -1,6 +1,7 @@
 const lodash = require("lodash");
 const Job = require("./job");
-const log = require("../log.util")("job")
+const log = require("../log.util")("JOB_CHECKER")
+const moment = require("moment")
 
 const checkerId = "times-29"
 
@@ -12,23 +13,27 @@ const _this = {
             log.info(`(${index}/${config.length}) init job(${p.name}/${p.id}) success.`)
         })
         _this.checker()
-        // if (initChecker && lodash.isEmpty(_this.getjob("times-29"))) {
-        //     _this.checker()
-        // }
     },
     checker() {
-        const checkerHandle=()=>{
-            log.info("\n")
-            log.info("------checktimes----------")
+        log.n()
+        const checkerHandle = () => {
+            log.info(`----------- [CHECK_JOBS] ${moment().format("YYYY-MM-DD hh:mm:ss")} -----------`)
             const list = _this.getjobs().filter(p => p.id != checkerId)
-            list.forEach((p, index) => {
-                log.info(`(${index}|${list.length}) check job(${p.name}/${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error})`)
+            log.info(`检查队列:${list.length}`)
+            list.forEach(async (p, index) => {
+                if (p.type != Job.Type.ERROR) {
+                    log.info(`(${index}/${list.length}) (success) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) str${p.handleStr}`)
+                } else {
+                    p.error()
+                    log.error(`(${index}/${list.length}) (error) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) errorMsg(${p.errorMsg})`)
+                }
             })
-            log.info("------checktimes end------\n")
+            log.info("----------- [CHECK_JOBS] end ---------------------------")
+            log.n()
         }
         checkerHandle()
         //1分钟检查一次，配合startTime只支持到分钟级别
-        setInterval(checkerHandle, 60 * 1000)
+        setInterval(checkerHandle, 1000)
     },
     addjob(t) {
         if (!lodash.isEmpty(_this.getjobByName(t.name))) {
