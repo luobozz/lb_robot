@@ -18,9 +18,8 @@ module.exports = [
         handle:()=>{
             console.log(执行了)
         },
-        type: Timer.Type.INTERVAL,
-        startType:Timer.StartType.LATER,
-        startTime:parseInt(moment("2021-10-30 17:39").format("x"))
+        type: Timer.Type.EVERDAY,
+        handleStr:"",
     },
     {
         name: "提醒休息",
@@ -41,7 +40,6 @@ module.exports = [
                 }
             })
         },
-        // startType: Timer.StartType.IMMEDIATELY,
-        times: 45 * 60 * 1000,
-        type: Timer.Type.INTERVAL,
+        type: Timer.Type.EVERDAY,
+        handleStr:"",
     }]

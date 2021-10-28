@@ -58,7 +58,7 @@ class Job {
         //times主进程占用号
         this.id = config.id == "times-29" ? config.id : uuid();
         this.name = config?.name || "未命名";
-        this.type = config?.Type || Type.NONE;
+        this.type = config?.type || Type.NONE;
         this.handle = config?.handle || null;
         this.handleStr = config?.handleStr || "";
         this.handleHistory = {
@@ -84,4 +84,4 @@ class Job {
     static Type = Type
 }
 
-module.exports = job
+module.exports = Job

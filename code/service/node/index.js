@@ -1,5 +1,4 @@
 const timer=require("./util/jobs.util")
-const timerConfig=require("./config/timer.config")
+const jobConfig=require("./config/job.configb")
 
-
-timer.initTimerConfig(timerConfig,true)
+timer.initByConfig(jobConfig,true)
