@@ -9,31 +9,34 @@ let jobs = [];
 const _this = {
     initByConfig(config, initChecker) {
         config.forEach((p, index) => {
+            log.info(`(${index+1}/${config.length}) init job(${p.name}).`)
             p = _this.addjob(p)
-            log.info(`(${index}/${config.length}) init job(${p.name}/${p.id}) success.`)
         })
         _this.checker()
     },
     checker() {
         log.n()
         const checkerHandle = () => {
-            log.info(`----------- [CHECK_JOBS] ${moment().format("YYYY-MM-DD hh:mm:ss")} -----------`)
+            log.info(`----------- [CHECK_JOBS] ${moment().format("YYYY-MM-DD HH:mm:ss")} -----------`)
             const list = _this.getjobs().filter(p => p.id != checkerId)
             log.info(`检查队列:${list.length}`)
             list.forEach(async (p, index) => {
+                log.n()
                 if (p.type != Job.Type.ERROR) {
-                    log.info(`(${index}/${list.length}) (success) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) str${p.handleStr}`)
+                    log.info(`(${index+1}/${list.length}) (success) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) str${p.handleStr}`)
+                    p.doHandle()
                 } else {
+                    log.error(`(${index+1}/${list.length}) (error) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) errorMsg(${p.errorMsg})`)
                     p.error()
-                    log.error(`(${index}/${list.length}) (error) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) errorMsg(${p.errorMsg})`)
                 }
             })
+            log.n()
             log.info("----------- [CHECK_JOBS] end ---------------------------")
             log.n()
         }
         checkerHandle()
         //1分钟检查一次，配合startTime只支持到分钟级别
-        setInterval(checkerHandle, 1000)
+        setInterval(checkerHandle, 60 * 1000)
     },
     addjob(t) {
         if (!lodash.isEmpty(_this.getjobByName(t.name))) {

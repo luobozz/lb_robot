@@ -1,6 +1,7 @@
 const { uuid } = require("../common.util")
 const log = require("../log.util")("JOB")
 const parser = require('cron-parser');
+const moment = require("moment")
 
 const Type = {
     //执行一次 handleStr使用具体执行时间戳
@@ -11,9 +12,39 @@ const Type = {
     NONE: "none",
 }
 
+const initError = function (msg) {
+    this.type = Type.ERROR
+    this.errorMsg = msg
+    log.error(msg)
+}
+
+const canHandle = function (time) {
+    try {
+        return moment().format("x") - moment(time).format("x") <= 60 * 1000
+    } catch (e) {
+        initError.call(this, `can't make sure time(${time}) handle status because of (${e.message}), please check handleStr.`)
+    }
+}
+
 const TypeHandler = {
-    onetimes() { },
-    everyday() { },
+    onetimes() {
+        if (canHandle.call(this, this.handleInterval)) {
+            log.info(`(handle success)job(${this.id}) is allow to handle in onetimes`)
+            this.handle()
+        } else {
+            log.warn(`(handle pause)job(${this.id}) is not allow to handle, one times(${moment(this.handleInterval).format("YYYY-MM-DD HH:mm:ss")})`)
+        }
+    },
+    everyday() {
+        const prev=this.handleInterval.prev()._date.ts,next=this.handleInterval.next()._date.ts
+        if (canHandle.call(this, prev)) {
+            log.info(`(handle success)job(${this.id}) is allow to handle,${moment().format("YYYY-MM-DD HH:mm:ss")} prev time(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), next time(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
+            this.handle()
+        } else {
+            log.warn(`(handle pause)job(${this.id}) is not allow to handle, prev time(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), next time(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
+        }
+
+    },
     error() {
         log.error(`job(${this.id}) is error, because of ${this.errorMsg}.`)
     },
@@ -42,25 +73,28 @@ class Job {
             try {
                 this.handleInterval = parser.parseExpression(this.handleStr);
             } catch (e) {
-                this.type=Type.ERROR
-                this.errorMsg=`cronStr(${this.handleStr}) parse exception ${e.message} `
+                initError.call(this, `cronStr(${this.handleStr}) parse exception ${e.message} `)
+            }
+        } else if (this.type === Type.ONETIMES) {
+            this.handleInterval = moment(this.handleStr)
+            if (this.handleInterval.format("YYYY-MM-DD HH:mm:ss") == "Invalid date") {
+                initError.call(this, `cronStr(${this.handleStr}) parse exception not  `)
             }
         }
     }
 
-    handle() {
-        const handle = TypeHandler[this.type]?.start || null
+    doHandle() {
+        const handle = TypeHandler[this.type] || null
         if (handle == null) {
             this.error(`job(${this.name}/${this.id}) is execute with a error, beacuse job's handle is not allowed.`)
         } else {
             handle.call(this)
-            log.info(`job(${this.name}/${this.id}) is execute success.`)
             this.handleHistory.execTimes.success = this.handleHistory.execTimes.success + 1
         }
     }
 
     error(msg) {
-        log.error(msg?msg:this.errorMsg)
+        log.error(msg ? msg : this.errorMsg)
         this.handleHistory.execTimes.error = this.handleHistory.execTimes.error + 1
     }
 
