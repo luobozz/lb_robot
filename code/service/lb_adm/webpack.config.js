@@ -5,7 +5,7 @@ module.exports = {
   devtool: false,
   output: {
     path:__dirname+"/dist",
-    filename:"[fullhash].js"
+    // filename:"[fullhash].js"
   },
   plugins:[
     new CleanWebpackPlugin()
