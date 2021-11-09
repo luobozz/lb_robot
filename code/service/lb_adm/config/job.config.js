@@ -8,9 +8,9 @@ const Timer = require("../util/jobs.util/job");
 const moment = require("moment")
 
 const send = (context) => {
-    // api.dingtalk.robot.send(context).then(r => {
-    //     // console.log(r.data)
-    // })
+    api.dingtalk.robot.send(context).then(r => {
+        // console.log(r.data)
+    })
 }
 module.exports = [
     // {
@@ -21,27 +21,27 @@ module.exports = [
     //     type: Timer.Type.ONETIMES,
     //     handleStr: "2021-10-29 17:48:00",
     // },
-    // {
-    //     name: "测试",
-    //     handle: () => {
-    //         send({
-    //             "msgtype": "actionCard",
-    //             "actionCard": {
-    //                 "title": "💕💕💕每日打卡",
-    //                 "text": "1. 点赞 \n\n2. 情侣空间签到 \n\n 3. 今日疫苗",
-    //                 "btnOrientation": "0",
-    //                 "btns": [
-    //                     {
-    //                         "title": "好的:)",
-    //                         "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
-    //                     }
-    //                 ]
-    //             }
-    //         })
-    //     },
-    //     type: Timer.Type.WORKDAY,
-    //     handleStr: "0 0 10,11,15,16,17,18 * * *",
-    // },
+    {
+        name: "测试",
+        handle: () => {
+            send({
+                "msgtype": "actionCard",
+                "actionCard": {
+                    "title": "💕💕💕每日打卡",
+                    "text": "1. 点赞 \n\n2. 情侣空间签到 \n\n 3. 今日疫苗",
+                    "btnOrientation": "0",
+                    "btns": [
+                        {
+                            "title": "好的:)",
+                            "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
+                        }
+                    ]
+                }
+            })
+        },
+        type: Timer.Type.EVERDAY,
+        handleStr: "0 30 8 * * *",
+    },
     {
         name: "提醒休息",
         handle: () => {
@@ -62,5 +62,6 @@ module.exports = [
             })
         },
         type: Timer.Type.WORKDAY,
-        handleStr: "0 6 10,11,15,16,17,18 * * *",
-    }]
+        handleStr: "0 0 10,11,15,16,17,18 * * *",
+    }
+]

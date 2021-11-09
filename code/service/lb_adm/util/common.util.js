@@ -12,7 +12,7 @@ const _ = {
         return _.replaceAll(uuidv4(), "-", "")
     },
     workday: {
-        async checkToday(){
+        async checkToday() {
             return await _.workday.checkWorkDay(moment())
         },
         async checkWorkDay(moment) {
@@ -23,6 +23,9 @@ const _ = {
     },
     replaceAll: (str, match, replacement) => {
         return str.replace(new RegExp(escapeRegExp(match), 'g'), () => replacement);
+    },
+    sleep(milliseconds) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
 }
 

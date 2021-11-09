@@ -21,8 +21,9 @@ const initError = function (msg) {
 
 const canHandle = function (time) {
     try {
-        log.info(moment().format("x") - moment(time).format("x") )
-        return moment().format("x") - moment(time).format("x") <= 60 * 1000
+        const times=Math.abs(moment().format("x") - moment(time).format("x"))
+        // log.info(times,moment(time).format("YYYY-MM-DD HH:mm:ss"))
+        return times <= 60 * 1000
     } catch (e) {
         initError.call(this, `执行时间字符串(${time}) 不能确定下次执行时间，原因是 (${e.message})`)
         return false
@@ -40,7 +41,7 @@ const TypeHandler = {
     },
     everyday() {
         const prev = this.handleInterval.prev()._date.ts, next = this.handleInterval.next()._date.ts
-        if (canHandle.call(this, prev)) {
+        if (canHandle.call(this, next)) {
             log.info(`(handle success)job(${this.id}) 允许执行，执行时间 ${moment().format("YYYY-MM-DD HH:mm:ss")} 上次执行(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), 下次执行(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
             this.handle()
         } else {

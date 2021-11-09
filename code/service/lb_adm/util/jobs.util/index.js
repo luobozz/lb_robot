@@ -1,6 +1,7 @@
 const lodash = require("lodash");
 const Job = require("./job");
 const log = require("../log.util")("JOB_CHECKER")
+const { sleep } = require("../common.util")
 const moment = require("moment");
 const { reject } = require("lodash");
 
@@ -21,8 +22,8 @@ const _this = {
             log.info(`----------- [CHECK_JOBS] ${moment().format("YYYY-MM-DD HH:mm:ss")} -----------`)
             const list = _this.getjobs().filter(p => p.id != checkerId)
             log.info(`检查队列:${list.length}`)
-            for(let index=0;index<list.length;index++){
-                let p=list[index]
+            for (let index = 0; index < list.length; index++) {
+                let p = list[index]
                 log.n()
                 if (p.type != Job.Type.ERROR) {
                     log.info(`(${index + 1}/${list.length}) 【success】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|执行字符串:${p.handleStr}`)
@@ -38,9 +39,16 @@ const _this = {
             log.n()
         }
 
+        while (moment().format("ss") != "00") {
+            log.info(`执行开始秒数校准，当前秒数${moment().format("ss")}`)
+            await sleep(1000)
+        }
+
         await checkerHandle()
-        //1分钟检查一次，配合startTime只支持到分钟级别
-        setInterval(checkerHandle, 60 * 1000)
+        // 1分钟检查一次，配合startTime只支持到分钟级别
+        setInterval(async ()=>{
+            await checkerHandle()
+        }, 60 * 1000)
     },
     addjob(t) {
         if (!lodash.isEmpty(_this.getjobByName(t.name))) {
