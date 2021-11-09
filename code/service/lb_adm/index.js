@@ -1,6 +1,4 @@
-// const timer = require("./util/jobs.util")
-// const jobConfig = require("./config/job.config")
+const timer = require("./util/jobs.util")
+const jobConfig = require("./config/job.config")
 
-// timer.initByConfig(jobConfig,true)
-
-console.log(123)
+timer.initByConfig(jobConfig,true)
