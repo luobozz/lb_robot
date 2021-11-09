@@ -1,12 +1,8 @@
-const timer = require("./util/jobs.util")
-const jobConfig = require("./config/job.config")
-const moment = require("moment")
+const timer = require("./util/jobs.util");
+const jobConfig = require("./config/job.config");
 
-// timer.initByConfig(jobConfig,true)
+(async function run() {
+    await timer.initByConfig(jobConfig,true)
+})()
 
 
-
-const t = require("./util/common.util")
-const isWorkDay=t.workday.checkWorkDay(moment())
-
-console.log(isWorkDay)

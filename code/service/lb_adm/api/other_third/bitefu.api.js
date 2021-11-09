@@ -25,6 +25,5 @@ module.exports = {
             log.error(`查询假日信息失败，时间${thisYear}，原因 ${e}`)
         })
         return yearJr
-        // storage.put('hello', 'world');
     }
 }

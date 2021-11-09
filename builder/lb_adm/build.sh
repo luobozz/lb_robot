@@ -24,6 +24,7 @@ echo -e "\\n========DOCKER RUN============="
 sudo docker run -d \
                 -v /home/luobo/project/robot/lb_adm/lib:/lb_adm/lib \
                 -v /home/luobo/project/robot/lb_adm/dist:/lb_adm/dist \
+                -e TZ=Asia/Shanghai \
                 --name=$name \
                 $imagesName \
                 sh /lb_adm/lib/start.sh
@@ -32,4 +33,4 @@ sudo docker ps -a
 echo -e "====================================\\n"
 
 
-sudo docker exec -it $name /bin/bash
+# sudo docker exec -it $name /bin/bash

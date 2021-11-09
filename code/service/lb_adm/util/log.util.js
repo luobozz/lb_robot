@@ -4,11 +4,11 @@ module.exports = (name) => {
 
     for (let e in console) {
         exports[e] = (...args) => {
-     
+
             if (e == "error") {
-                console.error('\x1B[31m%s\x1B[0m',`[${name}]`, ...args)
-            } else if (e=="warn") {
-                console.error('\x1B[33m%s\x1B[0m',`[${name}]`, ...args)
+                console.error('\x1B[31m%s\x1B[0m', `[${name}]`, ...args)
+            } else if (e == "warn") {
+                console.error('\x1B[33m%s\x1B[0m', `[${name}]`, ...args)
             } else {
                 console[e](`[${name}]`, ...args)
             }
@@ -17,6 +17,10 @@ module.exports = (name) => {
 
     exports.n = () => {
         console.log("")
+    }
+
+    exports.pass = (...args) => {
+        console.info('\x1B[32m%s\x1B[0m', `[${name}]`, ...args)
     }
     return exports
 }

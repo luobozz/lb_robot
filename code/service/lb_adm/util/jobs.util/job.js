@@ -1,4 +1,4 @@
-const { uuid } = require("../common.util")
+const { uuid, workday } = require("../common.util")
 const log = require("../log.util")("JOB")
 const parser = require('cron-parser');
 const moment = require("moment")
@@ -45,7 +45,14 @@ const TypeHandler = {
             log.warn(`(handle pause)job(${this.id}) 不能执行，上次执行(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), 下次执行(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
         }
     },
-    workday(){},
+    async workday() {
+        const isWorkday=await workday.checkToday()
+        if(isWorkday){
+            TypeHandler.everyday.call(this)
+        }else{
+            log.pass(`(handle vacation)job(${this.id}) 不能执行，今日${moment().format("YYYY-MM-DD")}是非工作日`)
+        }
+    },
     error() {
         log.error(`job(${this.id}) 执行出错，失败原因:${this.errorMsg}.`)
     },
@@ -70,7 +77,7 @@ class Job {
                 error: 0
             }
         }
-        if (this.type === Type.EVERDAY) {
+        if (this.type === Type.EVERDAY||this.type===Type.WORKDAY) {
             try {
                 this.handleInterval = parser.parseExpression(this.handleStr);
             } catch (e) {
@@ -84,12 +91,12 @@ class Job {
         }
     }
 
-    doHandle() {
+    async doHandle() {
         const handle = TypeHandler[this.type] || null
         if (handle == null) {
             this.error(`job(${this.name}/${this.id}) handle不能为空或者handle非法`)
         } else {
-            handle.call(this)
+            await handle.call(this)
             this.handleHistory.execTimes.success = this.handleHistory.execTimes.success + 1
         }
     }

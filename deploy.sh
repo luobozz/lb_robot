@@ -13,7 +13,7 @@ mkdir -p $op_path/.lb_releases
 
 # 打包 lb_adm
 cd $op_path/code/service/lb_adm
-# npm run build
+npm run build
 cd $op_path
 cp -r $op_path/code/service/lb_adm/dist/* $op_path/.lbop/lb_adm/dist/
 cp -r $op_path/builder/lb_adm/* $op_path/.lbop/lb_adm

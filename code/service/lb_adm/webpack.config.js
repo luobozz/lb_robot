@@ -1,23 +1,16 @@
 
-const {CleanWebpackPlugin} = require("clean-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
 module.exports = {
   devtool: false,
   output: {
-    path:__dirname+"/dist",
+    path: __dirname + "/dist",
     // filename:"[fullhash].js"
   },
-  plugins:[
+  plugins: [
     new CleanWebpackPlugin()
   ],
-  resolve: {
-    fallback: {
-      // 采用contextBridge引入electron所需node核心模块
-      // https://webpack.docschina.org/configuration/resolve/
-      // os: require.resolve("os-browserify"),
-      // path: require.resolve("path-browserify"),
-    }
-  },
+  target: 'node',
   module: {
     rules: [
       // Add support for native node modules

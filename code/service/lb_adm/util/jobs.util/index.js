@@ -1,40 +1,44 @@
 const lodash = require("lodash");
 const Job = require("./job");
 const log = require("../log.util")("JOB_CHECKER")
-const moment = require("moment")
+const moment = require("moment");
+const { reject } = require("lodash");
 
 const checkerId = "times-29"
 
 let jobs = [];
 const _this = {
-    initByConfig(config, initChecker) {
+    async initByConfig(config, initChecker) {
         config.forEach((p, index) => {
-            log.info(`(${index+1}/${config.length}) init job(${p.name}).`)
+            log.info(`(${index + 1}/${config.length}) init job(${p.name}).`)
             p = _this.addjob(p)
         })
-        _this.checker()
+        await _this.checker()
     },
-    checker() {
+    async checker() {
         log.n()
-        const checkerHandle = () => {
+        const checkerHandle = async () => {
             log.info(`----------- [CHECK_JOBS] ${moment().format("YYYY-MM-DD HH:mm:ss")} -----------`)
             const list = _this.getjobs().filter(p => p.id != checkerId)
             log.info(`检查队列:${list.length}`)
-            list.forEach(async (p, index) => {
+            for(let index=0;index<list.length;index++){
+                let p=list[index]
                 log.n()
                 if (p.type != Job.Type.ERROR) {
-                    log.info(`(${index+1}/${list.length}) 【success】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|执行字符串:${p.handleStr}`)
-                    p.doHandle()
+                    log.info(`(${index + 1}/${list.length}) 【success】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|执行字符串:${p.handleStr}`)
+                    await p.doHandle()
                 } else {
-                    log.error(`(${index+1}/${list.length})   【error】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|错误消息:${p.errorMsg}`)
+                    log.error(`(${index + 1}/${list.length})   【error】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|错误消息:${p.errorMsg}`)
                     p.error()
                 }
-            })
+            }
+
             log.n()
             log.info("----------- [CHECK_JOBS] end ---------------------------")
             log.n()
         }
-        checkerHandle()
+
+        await checkerHandle()
         //1分钟检查一次，配合startTime只支持到分钟级别
         setInterval(checkerHandle, 60 * 1000)
     },
