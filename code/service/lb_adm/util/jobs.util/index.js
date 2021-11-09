@@ -23,10 +23,10 @@ const _this = {
             list.forEach(async (p, index) => {
                 log.n()
                 if (p.type != Job.Type.ERROR) {
-                    log.info(`(${index+1}/${list.length}) (success) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) str${p.handleStr}`)
+                    log.info(`(${index+1}/${list.length}) 【success】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|执行字符串:${p.handleStr}`)
                     p.doHandle()
                 } else {
-                    log.error(`(${index+1}/${list.length}) (error) check job(${p.name}|${p.id}) type(${p.type}) success|error(${p.handleHistory.execTimes.success}|${p.handleHistory.execTimes.error}) errorMsg(${p.errorMsg})`)
+                    log.error(`(${index+1}/${list.length})   【error】${p.name}/${p.id}|类型:${p.type}|执行次数:${p.handleHistory.execTimes.success} 成功/${p.handleHistory.execTimes.error} 失败|错误消息:${p.errorMsg}`)
                     p.error()
                 }
             })
