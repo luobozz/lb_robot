@@ -21,9 +21,11 @@ const initError = function (msg) {
 
 const canHandle = function (time) {
     try {
+        log.info(moment().format("x") - moment(time).format("x") )
         return moment().format("x") - moment(time).format("x") <= 60 * 1000
     } catch (e) {
         initError.call(this, `执行时间字符串(${time}) 不能确定下次执行时间，原因是 (${e.message})`)
+        return false
     }
 }
 

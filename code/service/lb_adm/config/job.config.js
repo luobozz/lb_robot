@@ -62,5 +62,5 @@ module.exports = [
             })
         },
         type: Timer.Type.WORKDAY,
-        handleStr: "0 0 10,11,15,16,17,18 * * *",
+        handleStr: "0 6 10,11,15,16,17,18 * * *",
     }]
