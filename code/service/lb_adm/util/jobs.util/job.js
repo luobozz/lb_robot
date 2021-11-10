@@ -22,8 +22,8 @@ const initError = function (msg) {
 const canHandle = function (time) {
     try {
         const times=Math.abs(moment(moment().format("YYYY-MM-DD HH:mm:00")).format("x") - moment(time).format("x"))
-        // log.info(times,moment(time).format("YYYY-MM-DD HH:mm:ss"))
-        return times <= 60 * 1000
+        log.info(times,moment().format("YYYY-MM-DD HH:mm:00"),moment(time).format("YYYY-MM-DD HH:mm:ss"))
+        return times <= 10 * 1000
     } catch (e) {
         initError.call(this, `执行时间字符串(${time}) 不能确定下次执行时间，原因是 (${e.message})`)
         return false
