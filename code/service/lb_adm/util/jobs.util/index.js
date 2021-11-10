@@ -39,10 +39,10 @@ const _this = {
             log.n()
         }
 
-        while (moment().format("ss") != "00") {
-            log.info(`执行开始秒数校准，当前秒数${moment().format("ss")}`)
-            await sleep(1000)
-        }
+        // while (moment().format("ss") != "00") {
+        //     log.info(`执行开始秒数校准，当前秒数${moment().format("ss")}`)
+        //     await sleep(500)
+        // }
 
         await checkerHandle()
         // 1分钟检查一次，配合startTime只支持到分钟级别

@@ -21,7 +21,7 @@ const initError = function (msg) {
 
 const canHandle = function (time) {
     try {
-        const times=Math.abs(moment().format("x") - moment(time).format("x"))
+        const times=Math.abs(moment(moment().format("YYYY-MM-DD HH:mm:00")).format("x") - moment(time).format("x"))
         // log.info(times,moment(time).format("YYYY-MM-DD HH:mm:ss"))
         return times <= 60 * 1000
     } catch (e) {
