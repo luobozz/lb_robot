@@ -20,6 +20,7 @@ const initError = function (msg) {
 }
 
 const handleStrParse = function () {
+    console.log(123)
     if (this.type === Type.EVERDAY || this.type === Type.WORKDAY) {
         try {
             this.handleInterval = parser.parseExpression(this.handleStr);
@@ -55,13 +56,14 @@ const TypeHandler = {
         }
     },
     everyday() {
-        let prev =null, next = this.handleInterval.next()._date.ts
+        //this.handleInterval.prev()和next 是切换到下个时间点 所以要维持当前执行点则要分别调用一次 注意先后顺序
+        let prev = this.handleInterval.prev()._date.ts, next = this.handleInterval.next()._date.ts
         if (canHandle.call(this, next)) {
             next = this.handleInterval.next()._date.ts
             prev = this.handleInterval.prev()._date.ts
             log.info(`(handle success)job(${this.id}) 允许执行，执行时间 ${moment().format("YYYY-MM-DD HH:mm:ss")} 上次执行(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), 下次执行(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
             this.handle()
-            handleStrParse.call(this)
+            this.handleInterval.next()
         } else {
             log.warn(`(handle pause)job(${this.id}) 不能执行，上次执行(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), 下次执行(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
         }
