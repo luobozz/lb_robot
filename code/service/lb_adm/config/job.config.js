@@ -19,7 +19,7 @@ module.exports = [
       console.log(123)
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-11 10:17:00",
+        handleStr: "2021-11-12 09:50:00",
     },
     // {
     //     name: "测试",
