@@ -17,7 +17,7 @@ const _this = {
         await _this.checker()
     },
     async checker() {
-        log.n()
+        log.n(4)
         const checkerHandle = async () => {
             log.info(`----------- [CHECK_JOBS] ${moment().format("YYYY-MM-DD HH:mm:ss")} -----------`)
             const list = _this.getjobs().filter(p => p.id != checkerId)
@@ -36,7 +36,7 @@ const _this = {
 
             log.n()
             log.info("----------- [CHECK_JOBS] end ---------------------------")
-            log.n()
+            log.n(4)
         }
 
         // while (moment().format("ss") != "00") {

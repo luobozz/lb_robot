@@ -15,8 +15,11 @@ module.exports = (name) => {
         }
     }
 
-    exports.n = () => {
-        console.log("")
+    exports.n = (n) => {
+        n=n?n:1
+        for(let i=0;i<n;i++){
+            console.log("")
+        }
     }
 
     exports.pass = (...args) => {
