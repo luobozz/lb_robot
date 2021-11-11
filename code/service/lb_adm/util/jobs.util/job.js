@@ -19,10 +19,25 @@ const initError = function (msg) {
     log.error(msg)
 }
 
+const handleStrParse = function () {
+    if (this.type === Type.EVERDAY || this.type === Type.WORKDAY) {
+        try {
+            this.handleInterval = parser.parseExpression(this.handleStr);
+        } catch (e) {
+            initError.call(this, `cronStr(${this.handleStr}) 转换出错，原因 ${e.message} `)
+        }
+    } else if (this.type === Type.ONETIMES) {
+        this.handleInterval = moment(this.handleStr)
+        if (this.handleInterval.format("YYYY-MM-DD HH:mm:ss") == "Invalid date") {
+            initError.call(this, `cronStr(${this.handleStr}) 不是一个有效的时间  `)
+        }
+    }
+}
+
 const canHandle = function (time) {
     try {
-        const times=Math.abs(moment(moment().format("YYYY-MM-DD HH:mm:00")).format("x") - moment(time).format("x"))
-        log.info(times,moment().format("YYYY-MM-DD HH:mm:00"),moment(time).format("YYYY-MM-DD HH:mm:ss"))
+        const times = Math.abs(moment(moment().format("YYYY-MM-DD HH:mm:00")).format("x") - moment(time).format("x"))
+        log.info(times, moment().format("YYYY-MM-DD HH:mm:00"), moment(time).format("YYYY-MM-DD HH:mm:ss"))
         return times <= 10 * 1000
     } catch (e) {
         initError.call(this, `执行时间字符串(${time}) 不能确定下次执行时间，原因是 (${e.message})`)
@@ -40,19 +55,22 @@ const TypeHandler = {
         }
     },
     everyday() {
-        const prev = this.handleInterval.prev()._date.ts, next = this.handleInterval.next()._date.ts
+        let prev =null, next = this.handleInterval.next()._date.ts
         if (canHandle.call(this, next)) {
+            next = this.handleInterval.next()._date.ts
+            prev = this.handleInterval.prev()._date.ts
             log.info(`(handle success)job(${this.id}) 允许执行，执行时间 ${moment().format("YYYY-MM-DD HH:mm:ss")} 上次执行(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), 下次执行(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
             this.handle()
+            handleStrParse.call(this)
         } else {
             log.warn(`(handle pause)job(${this.id}) 不能执行，上次执行(${moment(prev).format("YYYY-MM-DD HH:mm:ss")}), 下次执行(${moment(next).format("YYYY-MM-DD HH:mm:ss")})`)
         }
     },
     async workday() {
-        const isWorkday=await workday.checkToday()
-        if(isWorkday){
+        const isWorkday = await workday.checkToday()
+        if (isWorkday) {
             TypeHandler.everyday.call(this)
-        }else{
+        } else {
             log.pass(`(handle vacation)job(${this.id}) 不能执行，今日${moment().format("YYYY-MM-DD")}是非工作日`)
         }
     },
@@ -80,18 +98,8 @@ class Job {
                 error: 0
             }
         }
-        if (this.type === Type.EVERDAY||this.type===Type.WORKDAY) {
-            try {
-                this.handleInterval = parser.parseExpression(this.handleStr);
-            } catch (e) {
-                initError.call(this, `cronStr(${this.handleStr}) 转换出错，原因 ${e.message} `)
-            }
-        } else if (this.type === Type.ONETIMES) {
-            this.handleInterval = moment(this.handleStr)
-            if (this.handleInterval.format("YYYY-MM-DD HH:mm:ss") == "Invalid date") {
-                initError.call(this, `cronStr(${this.handleStr}) 不是一个有效的时间  `)
-            }
-        }
+
+        handleStrParse.call(this)
     }
 
     async doHandle() {

@@ -13,22 +13,30 @@ const send = (context) => {
     })
 }
 module.exports = [
+    {
+        name: "抢苗提醒",
+        handle: () => {
+      console.log(123)
+        },
+        type: Timer.Type.ONETIMES,
+        handleStr: "2021-11-11 10:17:00",
+    },
     // {
-    //     name: "测试1次",
+    //     name: "测试",
     //     handle: () => {
-    //         console.log("执行了1次")
+    //         console.log(123)
     //     },
-    //     type: Timer.Type.ONETIMES,
-    //     handleStr: "2021-10-29 17:48:00",
+    //     type: Timer.Type.EVERDAY,
+    //     handleStr: "0 0/1 * * * *",
     // },
     {
-        name: "测试",
+        name: "每日打卡",
         handle: () => {
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
                     "title": "💕💕💕每日打卡",
-                    "text": "1. 点赞 \n\n2. 情侣空间签到 \n\n 3. 今日疫苗",
+                    "text": "### 💕💕💕每日打卡 \n 1. 点赞 \n\n2. 情侣空间签到 \n\n 3. 今日疫苗",
                     "btnOrientation": "0",
                     "btns": [
                         {
