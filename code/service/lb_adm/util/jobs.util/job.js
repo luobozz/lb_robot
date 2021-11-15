@@ -20,7 +20,6 @@ const initError = function (msg) {
 }
 
 const handleStrParse = function () {
-    console.log(123)
     if (this.type === Type.EVERDAY || this.type === Type.WORKDAY) {
         try {
             this.handleInterval = parser.parseExpression(this.handleStr);
@@ -71,6 +70,10 @@ const TypeHandler = {
     async workday() {
         const isWorkday = await workday.checkToday()
         if (isWorkday) {
+            let prev = this.handleInterval.prev()._date.ts, next = this.handleInterval.next()._date.ts
+            if(moment(next).format("DD")!=moment().format("DD")){
+                handleStrParse.call(this)
+            }
             TypeHandler.everyday.call(this)
         } else {
             log.pass(`(handle vacation)job(${this.id}) 不能执行，今日${moment().format("YYYY-MM-DD")}是非工作日`)
@@ -110,7 +113,7 @@ class Job {
             this.error(`job(${this.name}/${this.id}) handle不能为空或者handle非法`)
         } else {
             await handle.call(this)
-            this.handleHistory.execTimes.success = this.handleHistory.execTimes.success + 1
+            this.handleHistory.execTimes.success = this.handleHistory.execTimes.success + 1 
         }
     }
 
