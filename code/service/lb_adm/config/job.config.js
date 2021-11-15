@@ -16,10 +16,23 @@ module.exports = [
     {
         name: "抢苗提醒",
         handle: () => {
-      console.log(123)
+            send({
+                "msgtype": "actionCard",
+                "actionCard": {
+                    "title": "【抢苗抢苗】秒苗秒苗直接抢",
+                    "text": "### 【抢苗抢苗】秒苗秒苗直接抢",
+                    "btnOrientation": "0",
+                    "btns": [
+                        {
+                            "title": "好的:)",
+                            "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
+                        }
+                    ]
+                }
+            })
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-12 09:50:00",
+        handleStr: "2021-11-13 11:50:00",
     },
     // {
     //     name: "测试",
