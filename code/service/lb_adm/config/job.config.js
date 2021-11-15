@@ -19,8 +19,8 @@ module.exports = [
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
-                    "title": "【抢苗抢苗】秒苗秒苗直接抢",
-                    "text": "### 【抢苗抢苗】秒苗秒苗直接抢",
+                    "title": "【抢苗】【秒苗】成都市龙泉驿区山泉镇公立卫生院",
+                    "text": "### 【抢苗】【秒苗】成都市龙泉驿区山泉镇公立卫生院",
                     "btnOrientation": "0",
                     "btns": [
                         {
@@ -32,7 +32,7 @@ module.exports = [
             })
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-13 11:50:00",
+        handleStr: "2021-11-16 08:55:00",
     },
     // {
     //     name: "测试",
