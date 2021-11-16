@@ -19,8 +19,8 @@ module.exports = [
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
-                    "title": "【抢苗】【秒苗】成都市龙泉驿区山泉镇公立卫生院",
-                    "text": "### 【抢苗】【秒苗】成都市龙泉驿区山泉镇公立卫生院",
+                    "title": "【抢苗】【知苗易约】成华区猛追湾建设路社区卫生服务中心",
+                    "text": "### 【抢苗】【知苗易约】成华区猛追湾建设路社区卫生服务中心",
                     "btnOrientation": "0",
                     "btns": [
                         {
@@ -32,7 +32,49 @@ module.exports = [
             })
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-16 08:55:00",
+        handleStr: "2021-11-17 08:55:00",
+    },
+    {
+        name: "抢苗提醒",
+        handle: () => {
+            send({
+                "msgtype": "actionCard",
+                "actionCard": {
+                    "title": "【抢苗】【知苗易约】遂宁蓬溪疾病预防控制中心",
+                    "text": "### 【抢苗】【知苗易约】遂宁蓬溪疾病预防控制中心",
+                    "btnOrientation": "0",
+                    "btns": [
+                        {
+                            "title": "好的:)",
+                            "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
+                        }
+                    ]
+                }
+            })
+        },
+        type: Timer.Type.ONETIMES,
+        handleStr: "2021-11-20 08:55:00",
+    },
+    {
+        name: "抢苗提醒",
+        handle: () => {
+            send({
+                "msgtype": "actionCard",
+                "actionCard": {
+                    "title": "【抢苗】【妙苗】莲新社区卫生服务中心",
+                    "text": "### 【抢苗】【妙苗】莲新社区卫生服务中心",
+                    "btnOrientation": "0",
+                    "btns": [
+                        {
+                            "title": "好的:)",
+                            "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
+                        }
+                    ]
+                }
+            })
+        },
+        type: Timer.Type.ONETIMES,
+        handleStr: "2021-11-19 15:25:00",
     },
     // {
     //     name: "测试",
