@@ -14,13 +14,13 @@ const send = (context) => {
 }
 module.exports = [
     {
-        name: "抢苗提醒",
+        name: "抢苗提醒1",
         handle: () => {
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
-                    "title": "【抢苗】【知苗易约】成华区猛追湾建设路社区卫生服务中心",
-                    "text": "### 【抢苗】【知苗易约】成华区猛追湾建设路社区卫生服务中心",
+                    "title": "【抢苗】知苗易约 成都成华区万年社区",
+                    "text": "### 【抢苗】【知苗易约 成都成华区万年社区",
                     "btnOrientation": "0",
                     "btns": [
                         {
@@ -32,16 +32,16 @@ module.exports = [
             })
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-17 08:55:00",
+        handleStr: "2021-11-19 15:55:00",
     },
     {
-        name: "抢苗提醒",
+        name: "抢苗提醒2",
         handle: () => {
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
-                    "title": "【抢苗】【知苗易约】遂宁蓬溪疾病预防控制中心",
-                    "text": "### 【抢苗】【知苗易约】遂宁蓬溪疾病预防控制中心",
+                    "title": "【抢苗】 知苗易约 温江妇幼保健院",
+                    "text": "### 【抢苗】 知苗易约 温江妇幼保健院",
                     "btnOrientation": "0",
                     "btns": [
                         {
@@ -53,10 +53,10 @@ module.exports = [
             })
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-20 08:55:00",
+        handleStr: "2021-11-19 16:58:00",
     },
     {
-        name: "抢苗提醒",
+        name: "抢苗提醒3",
         handle: () => {
             send({
                 "msgtype": "actionCard",
