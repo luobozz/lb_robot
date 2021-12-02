@@ -19,8 +19,8 @@ module.exports = [
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
-                    "title": "【抢苗】知苗易约 成都成华区万年社区",
-                    "text": "### 【抢苗】【知苗易约 成都成华区万年社区",
+                    "title": "【抢苗】知苗易约 天彭社区",
+                    "text": "### 【抢苗】【知苗易约 天彭社区",
                     "btnOrientation": "0",
                     "btns": [
                         {
@@ -32,49 +32,7 @@ module.exports = [
             })
         },
         type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-19 15:55:00",
-    },
-    {
-        name: "抢苗提醒2",
-        handle: () => {
-            send({
-                "msgtype": "actionCard",
-                "actionCard": {
-                    "title": "【抢苗】 知苗易约 温江妇幼保健院",
-                    "text": "### 【抢苗】 知苗易约 温江妇幼保健院",
-                    "btnOrientation": "0",
-                    "btns": [
-                        {
-                            "title": "好的:)",
-                            "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
-                        }
-                    ]
-                }
-            })
-        },
-        type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-19 16:58:00",
-    },
-    {
-        name: "抢苗提醒3",
-        handle: () => {
-            send({
-                "msgtype": "actionCard",
-                "actionCard": {
-                    "title": "【抢苗】【妙苗】莲新社区卫生服务中心",
-                    "text": "### 【抢苗】【妙苗】莲新社区卫生服务中心",
-                    "btnOrientation": "0",
-                    "btns": [
-                        {
-                            "title": "好的:)",
-                            "actionURL": "https://huaban.com/search/?q=%E7%BB%BF%E6%A4%8D"
-                        }
-                    ]
-                }
-            })
-        },
-        type: Timer.Type.ONETIMES,
-        handleStr: "2021-11-19 15:25:00",
+        handleStr: "2021-12-02 09:55:00",
     },
     // {
     //     name: "测试",
