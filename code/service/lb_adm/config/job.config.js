@@ -48,7 +48,7 @@ module.exports = [
             send({
                 "msgtype": "actionCard",
                 "actionCard": {
-                    "title": "💕💕💕每日打卡",
+                    "title": "💕💕💕每日打卡1",
                     "text": "### 💕💕💕每日打卡 \n 1. 点赞 \n\n2. 情侣空间签到 \n\n 3. 今日疫苗",
                     "btnOrientation": "0",
                     "btns": [
